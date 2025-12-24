@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data Explorer - MCP App</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div class="app">
+    <!-- Header -->
+    <header class="header">
+      <h1>Data Explorer</h1>
+      <div class="dataset-picker">
+        <select id="datasetSelect">
+          <option value="">Loading datasets...</option>
+        </select>
+        <span class="record-count" id="recordCount"></span>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="main">
+      <!-- Sidebar - Filters -->
+      <aside class="sidebar">
+        <div class="panel">
+          <h3>Filters</h3>
+          <div id="filterContainer" class="filter-container">
+            <p class="empty-state">Select a dataset</p>
+          </div>
+          <div class="filter-actions">
+            <button id="applyFilters" class="btn btn-primary">Apply</button>
+            <button id="clearFilters" class="btn btn-secondary">Clear</button>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h3>Export</h3>
+          <div class="export-controls">
+            <select id="exportFormat">
+              <option value="json">JSON</option>
+              <option value="csv">CSV</option>
+            </select>
+            <button id="exportBtn" class="btn btn-secondary">Download</button>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Content Area -->
+      <div class="content">
+        <!-- Data Table -->
+        <div class="panel data-panel">
+          <div class="panel-header">
+            <h3>Data</h3>
+            <div class="table-controls">
+              <span id="tableInfo"></span>
+            </div>
+          </div>
+          <div class="table-container" id="tableContainer">
+            <p class="empty-state">Select a dataset to view data</p>
+          </div>
+          <div class="pagination" id="pagination"></div>
+        </div>
+
+        <!-- Charts -->
+        <div class="panel chart-panel">
+          <div class="panel-header">
+            <h3>Visualization</h3>
+            <div class="chart-controls">
+              <select id="chartType">
+                <option value="bar">Bar Chart</option>
+                <option value="line">Line Chart</option>
+                <option value="pie">Pie Chart</option>
+                <option value="doughnut">Doughnut</option>
+              </select>
+              <select id="chartGroupBy">
+                <option value="">Group by...</option>
+              </select>
+              <select id="chartMetric">
+                <option value="">Metric...</option>
+              </select>
+              <select id="chartOperation">
+                <option value="count">Count</option>
+                <option value="sum">Sum</option>
+                <option value="avg">Average</option>
+                <option value="min">Min</option>
+                <option value="max">Max</option>
+              </select>
+            </div>
+          </div>
+          <div class="chart-container">
+            <canvas id="chart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script type="module" src="./app.ts"></script>
+</body>
+</html>
