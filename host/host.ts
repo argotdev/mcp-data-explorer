@@ -30,7 +30,7 @@ function addLog(type: 'request' | 'response' | 'error' | 'info', data: unknown):
     <div class="log-data">${escapeHtml(dataStr)}</div>
   `;
   logContent.insertBefore(entry, logContent.firstChild);
-  while (logContent.children.length > 30) {
+  while (logContent.children.length > 100) {
     logContent.removeChild(logContent.lastChild!);
   }
 }
