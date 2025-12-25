@@ -176,6 +176,76 @@ app.use((_req, res, next) => {
   next();
 });
 
+// Tool definitions with visibility metadata per SEP-1865
+const toolDefinitions = [
+  {
+    name: 'list-datasets',
+    description: 'Get available datasets',
+    inputSchema: { type: 'object', properties: {} },
+    _meta: { ui: { visibility: ['app'] } }
+  },
+  {
+    name: 'get-schema',
+    description: 'Get dataset columns and types with statistics',
+    inputSchema: {
+      type: 'object',
+      properties: { dataset: { type: 'string', description: 'Dataset name' } },
+      required: ['dataset']
+    },
+    _meta: { ui: { visibility: ['app'] } }
+  },
+  {
+    name: 'query-data',
+    description: 'Query data with filters, sorting, and pagination',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        dataset: { type: 'string' },
+        filters: { type: 'array' },
+        sort: { type: 'object' },
+        limit: { type: 'number' },
+        offset: { type: 'number' }
+      },
+      required: ['dataset']
+    },
+    _meta: { ui: { visibility: ['app'] } }
+  },
+  {
+    name: 'aggregate',
+    description: 'Group and aggregate data',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        dataset: { type: 'string' },
+        groupBy: { type: 'string' },
+        metric: { type: 'string' },
+        operation: { type: 'string', enum: ['sum', 'avg', 'count', 'min', 'max'] }
+      },
+      required: ['dataset', 'groupBy', 'metric', 'operation']
+    },
+    _meta: { ui: { visibility: ['app'] } }
+  },
+  {
+    name: 'export-data',
+    description: 'Export filtered data as CSV or JSON',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        dataset: { type: 'string' },
+        filters: { type: 'array' },
+        format: { type: 'string', enum: ['csv', 'json'] }
+      },
+      required: ['dataset']
+    },
+    _meta: { ui: { visibility: ['app'] } }
+  }
+];
+
+// Endpoint to list available tools with metadata
+app.get('/api/tools', (_req, res) => {
+  res.json({ tools: toolDefinitions });
+});
+
 // Tool: list-datasets
 app.post('/api/tools/list-datasets', (_req, res) => {
   const result = Array.from(datasets.values()).map(ds => ({
